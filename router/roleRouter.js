@@ -67,8 +67,8 @@ router.post("/update", (req, res) => {
  */
 router.post("/setPermits", (req, res) => {
   const { roleId, authIds } = req.body;
-  if (roleId === 24)
-    return res.send({ code: 500, msg: "配置失败，超级管理员禁止修改" });
+  // if (roleId === 24)
+  //   return res.send({ code: 500, msg: "配置失败，超级管理员禁止修改" });
   Role.updateOne({ roleId }, { authIds })
     .then((data) => {
       console.log(data);
