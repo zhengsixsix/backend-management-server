@@ -1,0 +1,125 @@
+[{
+  "_id": {
+    "$oid": "5f7f20a737eeba42a06665fd"
+  },
+  "id": 1,
+  "name": "权限管理",
+  "fid": 0,
+  "path": "permits",
+  "level": 0,
+  "__v": 0,
+  "mark": "权限管理"
+},
+{
+  "_id": {
+    "$oid": "5f8be605191d9543e0e972ba"
+  },
+  "id": 13,
+  "name": "用户管理",
+  "fid": 0,
+  "path": "users",
+  "level": 0,
+  "mark": "用户管理",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "5f8bf05f77353133b8cb273a"
+  },
+  "id": 15,
+  "name": "角色列表",
+  "fid": 1,
+  "path": "roles",
+  "level": 1,
+  "mark": "角色列表",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "5f7f229d31c287510488903f"
+  },
+  "id": 2,
+  "name": "商品管理",
+  "fid": 0,
+  "path": "goods",
+  "level": 0,
+  "mark": "商品管理",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "5f7f23e431c2875104889041"
+  },
+  "id": 4,
+  "name": "数据统计",
+  "fid": 0,
+  "path": "other",
+  "level": 0,
+  "mark": "其他管理",
+  "__v": 0,
+  "sort": 0
+},
+{
+  "_id": {
+    "$oid": "5f8beb2c191d9543e0e972bb"
+  },
+  "id": 14,
+  "name": "权限列表",
+  "fid": 1,
+  "path": "permits",
+  "level": 1,
+  "mark": "权限列表",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d2fc4b6c2f8814b0e33719"
+  },
+  "id": 17,
+  "sort": 0,
+  "name": "订单管理",
+  "fid": 0,
+  "path": "Order",
+  "level": 0,
+  "mark": "订单管理",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d2fdbe61e11f3ae0bdd45a"
+  },
+  "id": 18,
+  "sort": 0,
+  "name": "商品列表",
+  "fid": 2,
+  "path": "goods",
+  "level": 1,
+  "mark": "商品列表",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d2fdf461e11f3ae0bdd45b"
+  },
+  "id": 19,
+  "sort": 0,
+  "name": "商品分类",
+  "fid": 2,
+  "path": "classification",
+  "level": 1,
+  "mark": "商品分类",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d2fe4c61e11f3ae0bdd45c"
+  },
+  "id": 20,
+  "sort": 0,
+  "name": "库存管理",
+  "fid": 2,
+  "path": "inventory",
+  "level": 1,
+  "mark": "库存管理",
+  "__v": 0
+}]
