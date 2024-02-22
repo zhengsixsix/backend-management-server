@@ -4,17 +4,6 @@ const Order = require("../db/model/orderModel");
 const { formatDateTime } = require("../utils/time");
 const Food = require("../db/model/foodModel");
 
-/**
- * @api {post} /food/add 商品添加
- * @apiName 商品添加
- * @apiGroup Food
- *
- * @apiParam {String} name 名称
- * @apiParam {String} price 价格
- * @apiParam {String} desc 描述
- * @apiParam {Number} typeid 分类id
- * @apiParam {String} img 图片
- */
 router.post("/add", (req, res) => {
   const {
     orderNo,
@@ -53,6 +42,52 @@ router.post("/add", (req, res) => {
     });
 });
 
+router.post("/update", (req, res) => {
+  const {
+    _id,
+    orderNo,
+    name,
+    productNum,
+    customer,
+    productAmount,
+    productType,
+    PaymentMethod,
+    DistributionMode,
+    PlaceOrder,
+  } = req.body;
+  Order.updateOne(
+    { _id },
+    {
+      orderNo,
+      name,
+      productNum,
+      customer,
+      productAmount,
+      productType,
+      PaymentMethod,
+      DistributionMode,
+      PlaceOrder,
+    }
+  )
+    .then(() => {
+      res.send({ code: 200, msg: "编辑成功" });
+    })
+    .catch(() => {
+      res.send({ code: 500, msg: "编辑失败" });
+    });
+});
+
+router.delete("/delete", (req, res) => {
+  let { _id } = req.body;
+  Order.deleteOne({ _id })
+    .then((data) => {
+      res.send({ code: 200, msg: "删除成功" });
+    })
+    .catch(() => {
+      res.send({ code: 500, msg: "删除失败" });
+    });
+});
+
 router.get("/getAllFoods", (req, res) => {
   Food.find({}).then((data) => {
     let result = data.map((item) => {
@@ -68,35 +103,21 @@ router.get("/getAllFoods", (req, res) => {
   });
 });
 
-router.get("/changeOrderType", (req, res) => {
-  Food.find({}).then((data) => {
-    let result = data.map((item) => {
-      return {
-        label: item.name,
-        value: item.name,
-      };
+router.post("/changeOrderType", (req, res) => {
+  const { _id, productType } = req.body;
+  Order.updateOne({ _id }, { productType })
+    .then(() => {
+      res.send({ code: 200, msg: "修改成功" });
+    })
+    .catch(() => {
+      res.send({ code: 500, msg: "修改失败" });
     });
-    res.send({
-      code: 200,
-      data: result,
-    });
-  });
 });
 
-/**
- * @api {post} /food/page 商品列表
- * @apiName 商品列表
- * @apiGroup Food
- *
- * @apiParam {Number} pageNo 页数
- * @apiParam {Number} pageSize 条数
- * @apiParam {Number} typeid 分类id
- * @apiParam {Number} key 关键字查询
- */
 router.post("/page", (req, res) => {
   const pageNo = Number(req.body.pageNo) || 1;
   const pageSize = Number(req.body.pageSize) || 10;
-  const { orderNo } = req.body;
+  const { orderNo, PaymentMethod, productType, startDate, endDate } = req.body;
   let query = { $or: [{ orderNo: { $regex: orderNo } }] };
   Order.countDocuments(query, (err, count) => {
     if (err) {
