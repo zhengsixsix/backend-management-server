@@ -45,6 +45,7 @@ const langRouter = require("./router/langRouter");
 const roleRouter = require("./router/roleRouter");
 const permitRouter = require("./router/permitRouter");
 const orderRouter = require("./router/orderRouter");
+const classRouter = require("./router/classificationRouter");
 
 app.use("/user", userRouter);
 app.use(
@@ -88,6 +89,20 @@ app.use(
       });
   },
   orderRouter
+);
+app.use(
+  "/class",
+  (req, res, next) => {
+    const { token } = req.headers;
+    verToken(token)
+      .then(() => {
+        next();
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  },
+  classRouter
 );
 app.use(
   "/food",
