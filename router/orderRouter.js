@@ -118,7 +118,10 @@ router.post("/page", (req, res) => {
   const pageNo = Number(req.body.pageNo) || 1;
   const pageSize = Number(req.body.pageSize) || 10;
   const { orderNo, PaymentMethod, productType, startDate, endDate } = req.body;
-  let query = { $or: [{ orderNo: { $regex: orderNo } }] };
+  let query = { orderNo: { $regex: orderNo }, PaymentMethod: { $regex: PaymentMethod } };
+  if (typeof productType === 'boolean') {
+    query['productType'] = productType
+  }
   Order.countDocuments(query, (err, count) => {
     if (err) {
       res.send({ code: 500, msg: "订单列表获取失败" });
