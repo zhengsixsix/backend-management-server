@@ -46,8 +46,23 @@ const roleRouter = require("./router/roleRouter");
 const permitRouter = require("./router/permitRouter");
 const orderRouter = require("./router/orderRouter");
 const classRouter = require("./router/classificationRouter");
+const orthersRouter = require("./router/othersRouter");
 
 app.use("/user", userRouter);
+app.use(
+  "/orther",
+  (req, res, next) => {
+    const { token } = req.headers;
+    verToken(token)
+      .then(() => {
+        next();
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  },
+  orthersRouter
+);
 app.use(
   "/role",
   (req, res, next) => {
