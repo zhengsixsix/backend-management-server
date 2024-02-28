@@ -88,8 +88,11 @@ router.delete("/delete", (req, res) => {
     });
 });
 
-router.get("/getAllFoods", (req, res) => {
-  Food.find({}).then((data) => {
+router.post("/getAllFoods", (req, res) => {
+  const { name } = req.body
+  const reg = new RegExp(name);
+  let query = { $or: [{ name: { $regex: reg } }] }
+  Food.find(query).then((data) => {
     let result = data.map((item) => {
       return {
         label: item.name,

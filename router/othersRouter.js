@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Food = require("../db/model/foodModel");
+const Order = require('../db/model/orderModel')
 const { formatDateTime } = require("../utils/time");
 
 router.get("/getInventory", (req, res) => {
@@ -36,6 +37,15 @@ router.get("/getClass", (req, res) => {
     setTimeout(() => {
       res.send({ code: 200, data: { xData, YData }, msg: "查询成功" });
     }, 200);
+  });
+});
+router.get("/getOrder", (req, res) => {
+  Order.find({}).then((data) => {
+    var xData = [];
+    var YData = [];
+    xData = data.map(item => item.name)
+    YData = data.map(item => item.productNum)
+    res.send({ code: 200, data: { xData, YData }, msg: "查询成功" });
   });
 });
 module.exports = router;

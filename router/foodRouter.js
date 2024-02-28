@@ -83,8 +83,8 @@ router.post("/del", (req, res) => {
  * @apiParam {String} img 图片
  */
 router.post("/update", (req, res) => {
-  const { _id, name, price, desc, typeid, img } = req.body;
-  Food.updateOne({ _id }, { name, price, desc, typeid, img })
+  const { _id, name, price, desc, typeid, img, CargoSpace, Specifications } = req.body;
+  Food.updateOne({ _id }, { name, price, desc, typeid, img, CargoSpace, Specifications })
     .then(() => {
       res.send({ code: 200, msg: "修改成功" });
     })
@@ -108,13 +108,13 @@ router.post("/page", (req, res) => {
   const pageSize = Number(req.body.pageSize) || 10;
   const { typeid } = req.body;
 
-  const { key } = req.body;
-  const reg = new RegExp(key);
+  const { name, CargoSpace } = req.body;
+  const reg = new RegExp(name);
   let query = {};
   if (typeid) {
     query = {
       typeid,
-      $or: [{ name: { $regex: reg } }, { desc: { $regex: reg } }],
+      $or: [{ name: { $regex: reg } }, { CargoSpace: { $regex: CargoSpace } }],
     };
   } else {
     query = { $or: [{ name: { $regex: reg } }, { desc: { $regex: reg } }] };
