@@ -16,30 +16,29 @@ router.post("/add", (req, res) => {
     DistributionMode,
     PlaceOrder,
   } = req.body;
-  Order.find({ name })
-    .then((data) => {
-      if (data.length === 0) {
-        return Order.insertMany({
-          orderNo,
-          name,
-          productNum,
-          customer,
-          productAmount,
-          productType,
-          PaymentMethod,
-          DistributionMode,
-          PlaceOrder,
+  Order.find({ orderNo }).then((data) => {
+    if (data.length === 0) {
+      Order.insertMany({
+        orderNo,
+        name,
+        productNum,
+        customer,
+        productAmount,
+        productType,
+        PaymentMethod,
+        DistributionMode,
+        PlaceOrder,
+      })
+        .then(() => {
+          res.send({ code: 200, msg: "添加成功" });
+        })
+        .catch(() => {
+          res.send({ code: 500, msg: "添加失败" });
         });
-      } else {
-        res.send({ code: 500, msg: "订单已存在" });
-      }
-    })
-    .then(() => {
-      res.send({ code: 200, msg: "添加成功" });
-    })
-    .catch(() => {
-      res.send({ code: 500, msg: "添加失败" });
-    });
+    } else {
+      res.send({ code: 500, msg: "订单已存在" });
+    }
+  });
 });
 
 router.post("/update", (req, res) => {
@@ -89,9 +88,9 @@ router.delete("/delete", (req, res) => {
 });
 
 router.post("/getAllFoods", (req, res) => {
-  const { name } = req.body
+  const { name } = req.body;
   const reg = new RegExp(name);
-  let query = { $or: [{ name: { $regex: reg } }] }
+  let query = { $or: [{ name: { $regex: reg } }] };
   Food.find(query).then((data) => {
     let result = data.map((item) => {
       return {
@@ -121,9 +120,12 @@ router.post("/page", (req, res) => {
   const pageNo = Number(req.body.pageNo) || 1;
   const pageSize = Number(req.body.pageSize) || 10;
   const { orderNo, PaymentMethod, productType, startDate, endDate } = req.body;
-  let query = { orderNo: { $regex: orderNo }, PaymentMethod: { $regex: PaymentMethod } };
-  if (typeof productType === 'boolean') {
-    query['productType'] = productType
+  let query = {
+    orderNo: { $regex: orderNo },
+    PaymentMethod: { $regex: PaymentMethod },
+  };
+  if (typeof productType === "boolean") {
+    query["productType"] = productType;
   }
   Order.countDocuments(query, (err, count) => {
     if (err) {
